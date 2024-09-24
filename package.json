@@ -30,6 +30,7 @@
     "sass": "^1.78.0"
   },
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "gulp-htmlmin": "^5.0.1"
   }
 }
