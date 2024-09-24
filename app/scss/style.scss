@@ -1,11 +1,35 @@
 body{
   margin:0;
 }
-
+h1 {
+  margin: 0;
+  padding: 0;
+}
 .header{
-  font-size: 60px;
+  margin-left: 45px;
+}
+
+.header_1{
+  font-size: 24px;
   text-transform: uppercase;
   color: #ffd738;
   font-weight: 500;
   font-family: "Montserrat";
+  margin-top: 85px;
+}
+.header_2{
+  font-size: 24px;
+  text-transform: uppercase;
+  color: #363636;
+  font-weight: 500;
+  font-family: "Montserrat";
+}
+.header_3{
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #363636;
+  font-weight: 500;
+  font-family: "Montserrat";
+  margin-top: 10px;
 }
