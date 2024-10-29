@@ -13,6 +13,7 @@ function buildStyles() {
 };
 
 exports.buildStyles = buildStyles;
+
 exports.watch = function () {
   gulp.watch('./sass/**/*.scss', ['sass']);
 };
@@ -37,4 +38,31 @@ exports.html = gulp.series('fileinclude', 'minify')
  function images(){
   return gulp.src('app/img/**/*.png').pipe(imagemin()).pipe(gulp.dest('dist/img'))
  }
+
  exports.images = images
+
+ gulp.task("copy-bootstrap", function () {
+  return gulp
+    .src([
+      "node_modules/bootstrap/dist/css/bootstrap.min.css",
+      //"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+    ])
+    .pipe(gulp.dest("dist/css")); // Зберігаємо CSS
+});
+
+gulp.task(
+  "default",
+  gulp.series(exports.html, buildStyles, images, "copy-bootstrap", exports.watch)
+);
+
+/*gulp.task("bootstrap", function () {
+  return gulp
+    .src(
+      [
+        "node_modules/bootstrap/dist/css/bootstrap.min.css",
+       // "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+      ],
+      { base: "node_modules/bootstrap/dist" }
+    ) // базовий шлях для коректного збереження в dist
+    .pipe(gulp.dest("dist/css")); // Копіювання у dist
+});*/
