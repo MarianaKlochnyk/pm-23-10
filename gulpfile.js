@@ -4,65 +4,74 @@ const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const htmlmin = require('gulp-htmlmin');
 const fileinclude = require('gulp-file-include');
-const imagemin=require('gulp-imagemin')
+const imagemin = require('gulp-imagemin');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
 
+// Таск для компиляции SCSS
 function buildStyles() {
   return gulp.src('./app/scss/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./dist/css'));
-};
+}
 
-exports.buildStyles = buildStyles;
-
-exports.watch = function () {
-  gulp.watch('./sass/**/*.scss', ['sass']);
-};
-
-gulp.task('minify', () => {
+// Таск для минификации HTML
+function minifyHTML() {
   return gulp.src('app/*.html')
     .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(gulp.dest('dist'));
-});
+}
 
-gulp.task('fileinclude', function() {
+// Таск для инклюда HTML-файлов
+function fileInclude() {
   return gulp.src('app/**/*.html')
     .pipe(fileinclude({
       prefix: '@@',
       basepath: '@file'
     }))
     .pipe(gulp.dest('dist'));
-});
+}
 
-exports.html = gulp.series('fileinclude', 'minify')
+// Задача для обработки изображений
+function images() {
+  return gulp.src('app/img/**/*.{jpg,jpeg,png,gif}')
+    .pipe(imagemin())
+    .pipe(gulp.dest('dist/img'));
+}
 
- function images(){
-  return gulp.src('app/img/**/*.png').pipe(imagemin()).pipe(gulp.dest('dist/img'))
- }
+// Таск для JavaScript
+function scripts() {
+  return gulp.src('./app/js/**/*.js')
+    .pipe(concat('scripts.js'))
+    .pipe(uglify())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('dist/js'));
+}
 
- exports.images = images
+// Копирование Bootstrap CSS
+function copyBootstrap() {
+  return gulp.src("node_modules/bootstrap/dist/css/bootstrap.min.css")
+    .pipe(gulp.dest("dist/css"));
+}
 
- gulp.task("copy-bootstrap", function () {
-  return gulp
-    .src([
-      "node_modules/bootstrap/dist/css/bootstrap.min.css",
-      //"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-    ])
-    .pipe(gulp.dest("dist/css")); // Зберігаємо CSS
-});
+// Наблюдение за изменениями
+function watchFiles() {
+  gulp.watch('./app/scss/**/*.scss', buildStyles);
+  gulp.watch('app/**/*.html', gulp.series(fileInclude, minifyHTML));
+  gulp.watch('app/img/**/*.{jpg,jpeg,png,gif}', images);
+  gulp.watch('./app/js/**/*.js', scripts);
+}
 
-gulp.task(
-  "default",
-  gulp.series(exports.html, buildStyles, images, "copy-bootstrap", exports.watch)
-);
+// Основные задачи
+const html = gulp.series(fileInclude, minifyHTML);
+const build = gulp.series(html, buildStyles, images, scripts, copyBootstrap);
+const watch = gulp.parallel(watchFiles, build);
 
-/*gulp.task("bootstrap", function () {
-  return gulp
-    .src(
-      [
-        "node_modules/bootstrap/dist/css/bootstrap.min.css",
-       // "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-      ],
-      { base: "node_modules/bootstrap/dist" }
-    ) // базовий шлях для коректного збереження в dist
-    .pipe(gulp.dest("dist/css")); // Копіювання у dist
-});*/
+// Экспорт задач
+exports.buildStyles = buildStyles;
+exports.images = images;
+exports.scripts = scripts;
+exports.html = html;
+exports.watch = watchFiles;
+exports.default = watch;
