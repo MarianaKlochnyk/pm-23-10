@@ -1,77 +1,100 @@
-'use strict';
+import gulp from "gulp";
+import cssnano from "gulp-cssnano";
+import autoprefixer from "gulp-autoprefixer";
+import imagemin from "gulp-imagemin";
+import concat from "gulp-concat";
+import uglify from "gulp-uglify";
+import rename from "gulp-rename";
+import browserSync from "browser-sync";
+import * as sass from "sass";
+import gulpSass from "gulp-sass";
+import fileInclude from "gulp-file-include";
 
-const gulp = require('gulp');
-const sass = require('gulp-sass')(require('sass'));
-const htmlmin = require('gulp-htmlmin');
-const fileinclude = require('gulp-file-include');
-const imagemin = require('gulp-imagemin');
-const concat = require('gulp-concat');
-const uglify = require('gulp-uglify');
-const rename = require('gulp-rename');
+const sassCompiler = gulpSass(sass);
 
-// Таск для компиляции SCSS
-function buildStyles() {
-  return gulp.src('./app/scss/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./dist/css'));
-}
+// Таск для HTML
+gulp.task("html", function () {
+  return gulp
+    .src("app/html/*.html")
+    .pipe(
+      fileInclude({
+        prefix: "@@",
+        basepath: "@file",
+      })
+    )
+    .pipe(gulp.dest("dist/html")) // Зберігаємо в dist/html
+    .pipe(browserSync.stream());
+});
 
-// Таск для минификации HTML
-function minifyHTML() {
-  return gulp.src('app/*.html')
-    .pipe(htmlmin({ collapseWhitespace: true }))
-    .pipe(gulp.dest('dist'));
-}
+// Таск для SASS
+gulp.task("scss", function () {
+  return gulp
+    .src("app/scss/*.scss")
+    .pipe(sassCompiler().on("error", sassCompiler.logError))
+    .pipe(
+      autoprefixer({
+        overrideBrowserslist: ["last 2 versions"],
+        cascade: false,
+      })
+    )
+    .pipe(cssnano())
+    .pipe(rename({ suffix: ".min" }))
+    .pipe(gulp.dest("dist/css")) // Зберігаємо в dist/css
+    .pipe(browserSync.stream());
+});
 
-// Таск для инклюда HTML-файлов
-function fileInclude() {
-  return gulp.src('app/**/*.html')
-    .pipe(fileinclude({
-      prefix: '@@',
-      basepath: '@file'
-    }))
-    .pipe(gulp.dest('dist'));
-}
-
-// Задача для обработки изображений
-function images() {
-  return gulp.src('app/img/**/*.{jpg,jpeg,png,gif}')
-    .pipe(imagemin())
-    .pipe(gulp.dest('dist/img'));
-}
-
-// Таск для JavaScript
-function scripts() {
-  return gulp.src('./app/js/**/*.js')
-    .pipe(concat('scripts.js'))
+// Таск для JS
+gulp.task("scripts", function () {
+  return gulp
+    .src("app/js/*.js")
+    .pipe(concat("scripts.js"))
     .pipe(uglify())
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(gulp.dest('dist/js'));
-}
+    .pipe(rename({ suffix: ".min" }))
+    .pipe(gulp.dest("dist/js")) // Зберігаємо в dist/js
+    .pipe(browserSync.stream());
+});
 
-// Копирование Bootstrap CSS
-function copyBootstrap() {
-  return gulp.src("node_modules/bootstrap/dist/css/bootstrap.min.css")
-    .pipe(gulp.dest("dist/css"));
-}
+// Таск для зображень
+gulp.task("imgs", function () {
+  return gulp
+    .src("app/img/*.+(jpg|jpeg|png|gif)", { encoding: false })
+    .pipe(
+      imagemin({
+        progressive: true,
+        svgoPlugins: [{ removeViewBox: false }],
+        interlaced: true,
+      })
+    )
+    .pipe(gulp.dest("dist/img")); // Зберігаємо в dist/img
+});
 
-// Наблюдение за изменениями
-function watchFiles() {
-  gulp.watch('./app/scss/**/*.scss', buildStyles);
-  gulp.watch('app/**/*.html', gulp.series(fileInclude, minifyHTML));
-  gulp.watch('app/img/**/*.{jpg,jpeg,png,gif}', images);
-  gulp.watch('./app/js/**/*.js', scripts);
-}
+// Таск для спостереження за файлами
+gulp.task("watch", function () {
+  browserSync.init({
+    server: {
+      baseDir: "dist",
+    },
+  });
+  gulp
+    .watch("app/html/*.html", gulp.series("html"))
+    .on("change", browserSync.reload);
+  gulp.watch("app/js/*.js", gulp.series("scripts"));
+  gulp.watch("app/scss/*.scss", gulp.series("scss"));
+  gulp.watch("app/img/*.+(jpg|jpeg|png|gif)", gulp.series("imgs"));
+});
 
-// Основные задачи
-const html = gulp.series(fileInclude, minifyHTML);
-const build = gulp.series(html, buildStyles, images, scripts, copyBootstrap);
-const watch = gulp.parallel(watchFiles, build);
+// Таск для копіювання Bootstrap
+gulp.task("copy-bootstrap", function () {
+  return gulp
+    .src([
+      "node_modules/bootstrap/dist/css/bootstrap.min.css",
+      // "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+    ])
+    .pipe(gulp.dest("dist/css")); // Зберігаємо CSS в dist/css
+});
 
-// Экспорт задач
-exports.buildStyles = buildStyles;
-exports.images = images;
-exports.scripts = scripts;
-exports.html = html;
-exports.watch = watchFiles;
-exports.default = watch;
+// Задача за замовчуванням
+gulp.task(
+  "default",
+  gulp.series("html", "scss", "scripts", "imgs", "copy-bootstrap", "watch")
+);
