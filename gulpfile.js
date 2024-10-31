@@ -15,7 +15,7 @@ const sassCompiler = gulpSass(sass);
 // Таск для HTML
 gulp.task("html", function () {
   return gulp
-    .src("app/html/*.html")
+    .src("app/*.html")
     .pipe(
       fileInclude({
         prefix: "@@",
@@ -30,7 +30,7 @@ gulp.task("html", function () {
 gulp.task("scss", function () {
   return gulp
     .src('app/scss/**/*.scss')
-    .pipe(sassCompiler().on("error", sassCompiler.logError))
+    .pipe(sassCompiler().on('error', sassCompiler.logError))
     .pipe(
       autoprefixer({
         overrideBrowserslist: ["last 2 versions"],
