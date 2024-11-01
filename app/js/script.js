@@ -23,4 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
   setupToggle("toggleButton2", "exp_con", "mal3", "mal4");
   setupToggle("toggleButton3", "expertise_content");
   setupToggle("toggleButton4", "about_me_content");
+  setupToggle("toggleButton5", "contact_info_content");
+  setupToggle("toggleButton6", "hobby_content", "im");
 });

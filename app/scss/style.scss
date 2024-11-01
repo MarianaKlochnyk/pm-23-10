@@ -325,7 +325,20 @@ body{
   padding-top: 88px;
   padding-left: 77px;
 }
+.d-c5{
+  height: 35px;
+  width: auto;
+  margin-top: 7px;
+  margin-left: 5px;
+  width: 35px;
+  height: 35px;
+  background-color:#ffca05 ;
+  border-radius: 50%;
+  cursor: pointer;
+}
 .con{
+  display: flex;
+  flex-direction: row;
   font-size: 40px;
   font-family: sans-serif;
   font-weight: 550;
@@ -341,8 +354,19 @@ body{
 }
 .hobbies{
   position: relative;
-  padding-top: 130px;
+  padding-top: 145px;
   padding-left: 77px;
+}
+.d-c6{
+  height: 35px;
+  width: auto;
+  margin-top: 7px;
+  margin-left: 5px;
+  width: 35px;
+  height: 35px;
+  background-color:#ffca05 ;
+  border-radius: 50%;
+  cursor: pointer;
 }
 .hobby_content{
   display: flex;
@@ -350,6 +374,8 @@ body{
   font-family: sans-serif;
 }
 .hobi{
+  display: flex;
+  flex-direction: row;
   font-size: 40px;
   font-family: sans-serif;
   font-weight: 550;
