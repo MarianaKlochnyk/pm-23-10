@@ -117,12 +117,14 @@ body{
 .education_right{
   padding-left: 128px;
 }
-.ed{
-  display: flex;
-  flex-direction: row;
+.educ{
   font-size: 40px;
   font-family: sans-serif;
   font-weight: 550;
+}
+.ed{
+  display: flex;
+  flex-direction: row;
 }
 .d-c1{
   height: 35px;
@@ -141,6 +143,7 @@ body{
 .en1,.en2{
   font-size: 22px;
   font-family: sans-serif;
+  font-weight: 450px;
 }
 .na1,.na2{
   font-family: monospace;
@@ -174,12 +177,14 @@ body{
   border-radius: 50%;
   cursor: pointer;
 }
-.ex{
-  display: flex;
-  flex-direction: row;
+.experie{
   font-size: 40px;
   font-family: sans-serif;
   font-weight: 550;
+}
+.ex{
+  display: flex;
+  flex-direction: row;
 }
 .experience_content1{
   display: flex;
@@ -247,12 +252,14 @@ body{
   border-radius: 50%;
   cursor: pointer;
 }
-.expert{
-  display: flex;
-  flex-direction: row;
+.expe{
   font-size: 40px;
   font-family: sans-serif;
   font-weight: 550;
+}
+.expert{
+  display: flex;
+  flex-direction: row;
 }
 .el{
   font-family: monospace;
@@ -298,6 +305,11 @@ body{
 .about_me_content,.contact_info_content{
   padding-top: 30px;
 }
+.about{
+  font-size: 40px;
+  font-family: sans-serif;
+  font-weight: 550;
+}
 .d-c4{
   height: 35px;
   width: auto;
@@ -312,9 +324,6 @@ body{
 .ab{
   display: flex;
   flex-direction: row;
-  font-size: 40px;
-  font-family: sans-serif;
-  font-weight: 550;
 }
 .lor{
   font-family: monospace;
@@ -324,6 +333,11 @@ body{
 .contact_info{
   padding-top: 88px;
   padding-left: 77px;
+}
+.contact{
+  font-size: 40px;
+  font-family: sans-serif;
+  font-weight: 550;
 }
 .d-c5{
   height: 35px;
@@ -339,9 +353,6 @@ body{
 .con{
   display: flex;
   flex-direction: row;
-  font-size: 40px;
-  font-family: sans-serif;
-  font-weight: 550;
 }
 .phone,.email,.area{
   font-size: 25px;
@@ -376,6 +387,8 @@ body{
 .hobi{
   display: flex;
   flex-direction: row;
+}
+.hob{
   font-size: 40px;
   font-family: sans-serif;
   font-weight: 550;
