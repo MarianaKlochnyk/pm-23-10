@@ -93,7 +93,6 @@ body{
   background-color: #2b3036;
   z-index: -2;
   margin-left: 79px;
-  margin-top: -1420px;
 }
 .row2{
   display: flex;
@@ -103,6 +102,7 @@ body{
 .col2_1{
   color:#ffffff;
   width: 1010px;
+  position: relative;
 }
 .education{
   position: relative;
@@ -118,9 +118,22 @@ body{
   padding-left: 128px;
 }
 .ed{
+  display: flex;
+  flex-direction: row;
   font-size: 40px;
   font-family: sans-serif;
   font-weight: 550;
+}
+.d-c1{
+  height: 35px;
+  width: auto;
+  margin-top: 7px;
+  margin-left: 5px;
+  width: 35px;
+  height: 35px;
+  background-color:#ffca05 ;
+  border-radius: 50%;
+  cursor: pointer;
 }
 .e1,.e2{
   padding-bottom: 20px;
@@ -148,6 +161,25 @@ body{
   color: #22222d;
   font-weight: 600;
   font-size: 20px;
+}
+
+.d-c2{
+  height: 35px;
+  width: auto;
+  margin-top: 7px;
+  margin-left: 5px;
+  width: 35px;
+  height: 35px;
+  background-color:#ffca05 ;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.ex{
+  display: flex;
+  flex-direction: row;
+  font-size: 40px;
+  font-family: sans-serif;
+  font-weight: 550;
 }
 .experience_content1{
   display: flex;
@@ -183,12 +215,6 @@ body{
   font-size: 10px;
   margin-bottom: 10px;
 }
-.ex{
-  font-size: 40px;
-  font-family: sans-serif;
-  font-weight: 550;
-  margin-bottom: 20px;
-}
 .ent1,.ent2{
   font-size: 25px;
   font-family: sans-serif;
@@ -210,7 +236,20 @@ body{
   flex-direction: row;
   font-family: sans-serif;
 }
+.d-c3{
+  height: 35px;
+  width: auto;
+  margin-top: 7px;
+  margin-left: 5px;
+  width: 35px;
+  height: 35px;
+  background-color:#ffca05 ;
+  border-radius: 50%;
+  cursor: pointer;
+}
 .expert{
+  display: flex;
+  flex-direction: row;
   font-size: 40px;
   font-family: sans-serif;
   font-weight: 550;
@@ -259,7 +298,20 @@ body{
 .about_me_content,.contact_info_content{
   padding-top: 30px;
 }
+.d-c4{
+  height: 35px;
+  width: auto;
+  margin-top: 7px;
+  margin-left: 5px;
+  width: 35px;
+  height: 35px;
+  background-color:#ffca05 ;
+  border-radius: 50%;
+  cursor: pointer;
+}
 .ab{
+  display: flex;
+  flex-direction: row;
   font-size: 40px;
   font-family: sans-serif;
   font-weight: 550;
@@ -288,7 +340,8 @@ body{
   font-size: 22px;
 }
 .hobbies{
-  padding-top: 150px;
+  position: relative;
+  padding-top: 130px;
   padding-left: 77px;
 }
 .hobby_content{
@@ -628,5 +681,4 @@ body{
     bottom: 2%;
     right: 38%;
     transform: translateX(38%);
-    border-bottom-color: #22222d;
 }
