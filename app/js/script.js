@@ -1,24 +1,49 @@
 document.addEventListener("DOMContentLoaded", function() {
-  // Function to handle toggle functionality
-  function setupToggle(buttonId, contentClass) {
+  // Функція для налаштування перемикача
+  function setupToggle(buttonId, contentClass, ...additionalElements) {
     const toggleButton = document.getElementById(buttonId);
     const content = document.querySelector(`.${contentClass}`);
 
-    // Initially hide the content
+    // Ініціально приховуємо контент
     content.style.maxHeight = "0";
     content.style.overflow = "hidden";
     content.style.transition = "max-height 0.5s ease-in-out";
 
+    // Додаємо стиль для приховування додаткових елементів
+    additionalElements.forEach(selector => {
+      const element = document.querySelector(`.${selector}`);
+      if (element) {
+        element.style.display = "none";
+      }
+    });
+
+    // Додаємо подію натискання на кнопку
     toggleButton.addEventListener("click", function() {
       if (content.style.maxHeight === "0px") {
-        content.style.maxHeight = content.scrollHeight + "px"; // Set to its scroll height
+        content.style.maxHeight = content.scrollHeight + "px"; // Показуємо контент
+          
+        // Показуємо додаткові елементи
+        additionalElements.forEach(selector => {
+          const element = document.querySelector(`.${selector}`);
+          if (element) {
+            element.style.display = "block";
+          }
+        });
       } else {
-        content.style.maxHeight = "0px"; // Hide it
+        content.style.maxHeight = "0px"; // Приховуємо контент
+        
+        // Приховуємо додаткові елементи
+        additionalElements.forEach(selector => {
+          const element = document.querySelector(`.${selector}`);
+          if (element) {
+            element.style.display = "none";
+          }
+        });
       }
     });
   }
 
-  // Setup toggles for education and experience sections
+  // Налаштовуємо перемикачі для секцій з додатковими елементами
   setupToggle("toggleButton1", "education_content");
   setupToggle("toggleButton2", "exp_con", "mal3", "mal4");
   setupToggle("toggleButton3", "expertise_content");
