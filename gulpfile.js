@@ -65,7 +65,7 @@ gulp.task("imgs", function () {
         interlaced: true,
       })
     )
-    .pipe(gulp.dest("dist/img")); // Зберігаємо в dist/img
+    .pipe(gulp.dest("dist/img"));
 });
 
 // Таск для спостереження за файлами
