@@ -73,7 +73,6 @@ $(document).ready(function() {
   });
 });
 
-
 /*document.addEventListener("DOMContentLoaded", function() {
   // Функція для налаштування перемикача
   function setupToggle(buttonId, contentClass, ...additionalElements) {
