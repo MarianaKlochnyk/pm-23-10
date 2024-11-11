@@ -1,0 +1,64 @@
+{
+  "name": {
+    "first": "Michel",
+    "last": "Rigaurio"
+  },
+  "profession": "UI/UX Designer",
+  "photo": "img/photo3.png",
+  "education": [
+    {
+      "major": "Your Major Here",
+      "university": "Name of Your University",
+      "years": "2005-2009"
+    },
+    {
+      "major": "Your Major Here",
+      "university": "Name of Your University",
+      "years": "2009-2011"
+    }
+  ],
+  "experience": [
+    {
+      "position": "Enter Job Position Here",
+      "duration": "Present",
+      "company": "Company Name/Location",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore."
+    },
+    {
+      "position": "Enter Job Position Here",
+      "duration": "2017 - 2019",
+      "company": "Company Name/Location",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore."
+    }
+  ],
+  "expertise": [
+    "Adobe Photoshop",
+    "Adobe Illustrator",
+    "Adobe InDesign",
+    "PowerPoint"
+  ],
+  "aboutMe": "Lorem ipsum dolor a consectetur adipiscing elit eiusmod tempor incididunt labore dolore magna aliqua.",
+  "contactInfo": {
+    "phone": "+000 123 456 789",
+    "email": "urname@gmail.com",
+    "address": "Your Street Address Here"
+  },
+  "hobbies": [
+    {
+      "name": "Travel",
+      "icon": "img/travel.png"
+    },
+    {
+      "name": "Music",
+      "icon": "img/music.png"
+    },
+    {
+      "name": "Writing",
+      "icon": "img/writting.png"
+    },
+    {
+      "name": "Chess",
+      "icon": "img/chess.png"
+    }
+  ]
+}

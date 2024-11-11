@@ -93,8 +93,13 @@ gulp.task("copy-bootstrap", function () {
     .pipe(gulp.dest("dist/css")); // Зберігаємо CSS в dist/css
 });
 
+// Таск для копіювання data.json
+gulp.task("copy-json", function () {
+  return gulp.src("app/data.json").pipe(gulp.dest("dist"));
+});
+
 // Задача за замовчуванням
 gulp.task(
   "default",
-  gulp.series("html", "scss", "scripts", "imgs", "copy-bootstrap", "watch")
+  gulp.series("html", "scss", "scripts", "imgs", "copy-bootstrap", "copy-json", "watch")
 );
