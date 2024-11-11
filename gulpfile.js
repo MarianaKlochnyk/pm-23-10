@@ -50,7 +50,7 @@ gulp.task("scripts", function () {
     .pipe(concat("scripts.js"))
     .pipe(uglify())
     .pipe(rename({ suffix: ".min" }))
-    .pipe(gulp.dest("dist/js")) // Зберігаємо в dist/js
+    .pipe(gulp.dest("dist/js")) 
     .pipe(browserSync.stream());
 });
 
