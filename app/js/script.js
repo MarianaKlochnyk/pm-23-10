@@ -1,28 +1,29 @@
 $(document).ready(function(){
   $('.button').click(function(event){
-    $(this).toggleClass('active').closest('.section').find('.education-content').slideToggle(300);
+    $(this).toggleClass('rotated active').closest('.section').find('.education-content').slideToggle(300);
   });
   
   $('.button').click(function(event){
-    $(this).toggleClass('active').closest('.section-2').find('.experience_content').slideToggle(300);
+    $(this).toggleClass('rotated active').closest('.section-2').find('.experience_content').slideToggle(300);
   });
 
   $('.button').click(function(event){
-    $(this).toggleClass('active').closest('.section-2').find('.expertise-content').slideToggle(300);
+    $(this).toggleClass('rotated active').closest('.section-2').find('.expertise-content').slideToggle(300);
   });
 
   $('.button-1').click(function(event){
-    $(this).toggleClass('active').closest('.section-1').find('.about-me-content').slideToggle(300);
+    $(this).toggleClass('rotated active').closest('.section-1').find('.about-me-content').slideToggle(300);
   });
 
   $('.button-1').click(function(event){
-    $(this).toggleClass('active').closest('.section-1').find('.contact-info-content').slideToggle(300);
+    $(this).toggleClass('rotated active').closest('.section-1').find('.contact-info-content').slideToggle(300);
   });
 
   $('.button-1').click(function(event){
-    $(this).toggleClass('active').closest('.section-1').find('.hobbies-content').slideToggle(300);
+    $(this).toggleClass('rotated active').closest('.section-1').find('.hobbies-content').slideToggle(300);
   });
 });
+
 $(document).ready(function() {
   $.getJSON("data.json", function(data) {
     // Profile section
