@@ -24,55 +24,71 @@ $(document).ready(function(){
   });
 });
 
-$(document).ready(function() {
-  $.getJSON("data.json", function(data) {
-    // Profile section
-    $(".michel").text(data.profile.name.split(" ")[0]);
-    $(".rigaurio").text(data.profile.name.split(" ")[1]);
-    $(".ui").text(data.profile.title);
-    $(".photo").attr("src", data.profile.image);
+// Функція для асинхронного запиту на сервер для отримання даних
+async function getData() {
+  try {
+    const response = await fetch('json/data.min.json'); 
+    if (!response.ok) throw new Error('Помилка при завантаженні даних');
+    const data = await response.json(); 
+    renderData(data);
+  } catch (error) {
+    console.error('Помилка під час отримання даних:', error);
+  }
+}
 
-    // Education section
-    data.education.forEach((edu, index) => {
-      $(`.education-content .col-6:eq(${index}) .sub-title`).text(edu.major);
-      $(`.education-content .col-6:eq(${index}) .sub-sub-title`).html(`${edu.university}<br>${edu.years}`);
-    });
+// Функція для відображення даних на сторінці
+function renderData(data) {
+  // Відображення секції профілю
+  document.querySelector(".michel").textContent = data.name.first;
+  document.querySelector(".rigaurio").textContent = data.name.last;
+  document.querySelector(".ui").textContent = data.profession;
+  document.querySelector(".photo").src = data.photo;
 
-    // Experience section
-    data.experience.forEach((exp, index) => {
-      const selector = index === 0 ? "" : "-1";
-      $(`.experience_content .sub-title${selector}`).text(exp.position);
-      $(`.experience_content .sub-1${selector}`).text(exp.date);
-      $(`.experience_content .sub-2:eq(${index})`).text(exp.company);
-      $(`.experience_content .experience:eq(${index}) .sub-sub-title`).html(exp.description);
-    });
-
-    // Expertise section
-    data.expertise.forEach((skill, index) => {
-      $(`.expertise-content .col-3:eq(${index}) .donut-hole .text`).html(skill.replace(" ", "<br>"));
-    });
-
-    // About section
-    $(".about-me-content .sub-sub-title-1").html(data.about.replace(/\n/g, "<br>"));
-
-    // Contact Info
-    $(".contact-info-content .contact").each((index, element) => {
-      const key = $(element).text().toLowerCase();
-      $(element).next(".data").find("a").text(data.contact_info[key]);
-    });
-
-    // Hobbies
-    $(".hobbies-content .d-flex").empty();
-    data.hobbies.forEach(hobby => {
-      $(".hobbies-content .d-flex").append(`
-        <div class="${hobby.toLowerCase()}">
-          <img src="img/${hobby.toLowerCase()}.png" class="t">
-          <p class="phrase-1">${hobby}</p>
-        </div>
-      `);
-    });
+  // Відображення секції освіти
+  data.education.forEach((edu, index) => {
+    document.querySelector(`.education-content .col-6:nth-child(${index + 1}) .sub-title`).textContent = edu.major;
+    document.querySelector(`.education-content .col-6:nth-child(${index + 1}) .sub-sub-title`).innerHTML = `${edu.university}<br>${edu.years}`;
   });
-});
+
+  // Відображення секції досвіду роботи
+  data.experience.forEach((exp, index) => {
+    const selector = index === 0 ? "" : "-1";
+    document.querySelector(`.experience_content .sub-title${selector}`).textContent = exp.position;
+    document.querySelector(`.experience_content .sub-1${selector}`).textContent = exp.duration;
+    document.querySelector(`.experience_content .sub-2:nth-child(${index + 1})`).textContent = exp.company;
+    document.querySelector(`.experience_content .experience:nth-child(${index + 1}) .sub-sub-title`).innerHTML = exp.description;
+  });
+
+  // Відображення секції навичок
+  data.expertise.forEach((skill, index) => {
+    document.querySelector(`.expertise-content .col-3:nth-child(${index + 1}) .donut-hole .text`).innerHTML = skill.replace(" ", "<br>");
+  });
+
+  // Відображення секції "Про мене"
+  document.querySelector(".about-me-content .sub-sub-title-1").innerHTML = data.aboutMe.replace(/\n/g, "<br>");
+
+  // Відображення контактної інформації
+  document.querySelectorAll(".contact-info-content .contact").forEach((element, index) => {
+    const key = element.textContent.toLowerCase();
+    element.nextElementSibling.querySelector("a").textContent = data.contactInfo[key];
+  });
+
+  // Відображення хобі
+  const hobbiesContainer = document.querySelector(".hobbies-content .d-flex");
+  hobbiesContainer.innerHTML = ""; // Очистити контейнер перед додаванням нових елементів
+  data.hobbies.forEach(hobby => {
+    hobbiesContainer.innerHTML += `
+      <div class="${hobby.name.toLowerCase()}">
+        <img src="${hobby.icon}" class="t">
+        <p class="phrase-1">${hobby.name}</p>
+      </div>
+    `;
+  });
+}
+
+// Виклик функції для отримання даних
+getData();
+
 
 /*document.addEventListener("DOMContentLoaded", function() {
   // Функція для налаштування перемикача

@@ -95,7 +95,10 @@ gulp.task("copy-bootstrap", function () {
 
 // Таск для копіювання data.json
 gulp.task("copy-json", function () {
-  return gulp.src("app/data.json").pipe(gulp.dest("dist"));
+  return gulp.src("app/json/data.json")
+
+  .pipe(rename({ suffix: ".min" }))
+  .pipe(gulp.dest("./dist/json"))
 });
 
 // Задача за замовчуванням
