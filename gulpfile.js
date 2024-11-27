@@ -79,6 +79,7 @@ gulp.task("watch", function () {
     .watch("app/*.html", gulp.series("html"))
     .on("change", browserSync.reload);
   gulp.watch("app/js/*.js", gulp.series("scripts"));
+  gulp.watch("app/json/*.json", gulp.series("copy-json"));
   gulp.watch("app/scss/**/*.scss", gulp.series("scss"));
   gulp.watch("app/img/*.+(jpg|jpeg|png|gif)", gulp.series("imgs"));
 });
@@ -96,9 +97,9 @@ gulp.task("copy-bootstrap", function () {
 // Таск для копіювання data.json
 gulp.task("copy-json", function () {
   return gulp.src("app/json/data.json")
-
   .pipe(rename({ suffix: ".min" }))
   .pipe(gulp.dest("./dist/json"))
+  .pipe(browserSync.stream());
 });
 
 // Задача за замовчуванням

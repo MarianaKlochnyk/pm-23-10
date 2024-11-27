@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  getData();
   $('.button').click(function(event){
     $(this).toggleClass('rotated active').closest('.section').find('.education-content').slideToggle(300);
   });
@@ -27,9 +28,11 @@ $(document).ready(function(){
 // Функція для асинхронного запиту на сервер для отримання даних
 async function getData() {
   try {
-    const response = await fetch('json/data.min.json'); 
+    const response = await fetch('http://127.0.0.1:8080/json/data.min.json'); 
     if (!response.ok) throw new Error('Помилка при завантаженні даних');
     const data = await response.json(); 
+    console.log("data", data);
+    
     renderData(data);
   } catch (error) {
     console.error('Помилка під час отримання даних:', error);
@@ -38,9 +41,8 @@ async function getData() {
 
 // Функція для відображення даних на сторінці
 function renderData(data) {
-  // Відображення секції профілю
-  document.querySelector(".michel").textContent = data.name.first;
-  document.querySelector(".rigaurio").textContent = data.name.last;
+  document.querySelector(".michel").textContent = data.first;
+  document.querySelector(".rigaurio").textContent = data.last;
   document.querySelector(".ui").textContent = data.profession;
   document.querySelector(".photo").src = data.photo;
 
@@ -75,7 +77,7 @@ function renderData(data) {
 
   // Відображення хобі
   const hobbiesContainer = document.querySelector(".hobbies-content .d-flex");
-  hobbiesContainer.innerHTML = ""; // Очистити контейнер перед додаванням нових елементів
+  hobbiesContainer.innerHTML = "";
   data.hobbies.forEach(hobby => {
     hobbiesContainer.innerHTML += `
       <div class="${hobby.name.toLowerCase()}">
@@ -87,7 +89,7 @@ function renderData(data) {
 }
 
 // Виклик функції для отримання даних
-getData();
+// getData();
 
 
 /*document.addEventListener("DOMContentLoaded", function() {
