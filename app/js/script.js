@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  getData();
+  //getData();
   $('.button').click(function(event){
     $(this).toggleClass('rotated active').closest('.section').find('.education-content').slideToggle(300);
   });
@@ -25,10 +25,79 @@ $(document).ready(function(){
   });
 });
 
-// Функція для асинхронного запиту на сервер для отримання даних
 async function getData() {
   try {
-    const response = await fetch('http://127.0.0.1:8080/json/data.min.json'); 
+    const response = await fetch('http://127.0.0.1:8080/data/data.json'); // Запит на сервер
+    console.log('Response:', response); // Для налагодження
+    if (!response.ok) throw new Error('Помилка при завантаженні даних');
+    const data = await response.json(); // Перетворення JSON у JavaScript об'єкт
+    console.log('Data:', data); // Для налагодження
+    renderData(data); // Виводимо дані
+  } catch (error) {
+    console.error('Помилка під час отримання даних:', error);
+  }
+}
+
+function renderData(data) {
+  const container = document.getElementById('data');
+  container.innerHTML = `
+    <h1>${data.first} ${data.last}</h1>
+    <h2>${data.profession}</h2>
+    <img src="${data.photo}" alt="${data.first}'s photo" class="img-fluid mb-3">
+    <h3>About Me</h3>
+    <p>${data.aboutMe}</p>
+    <h3>Contact Info</h3>
+    <p>Phone: <a href="tel:${data.contactInfo.phone}">${data.contactInfo.phone}</a></p>
+    <p>Email: <a href="mailto:${data.contactInfo.email}">${data.contactInfo.email}</a></p>
+    <p>Address: ${data.contactInfo.address}</p>
+    <h3>Education</h3>
+    ${data.education.map((edu) => `<p><strong>${edu.major}</strong><br>${edu.university} (${edu.years})</p>`).join("")}
+    <h3>Experience</h3>
+    ${data.experience.map((exp) => `<p><strong>${exp.position}</strong> at ${exp.company}<br>${exp.duration}<br>${exp.description}</p>`).join("")}
+    <h3>Expertise</h3>
+    <ul>${data.expertise.map((skill) => `<li>${skill}</li>`).join("")}</ul>
+    <h3>Hobbies</h3>
+    <div class="d-flex flex-wrap">
+      ${data.hobbies.map((hobby) => `<div class="me-3 text-center"><img src="${hobby.icon}" alt="${hobby.name}" style="width: 50px;"><br>${hobby.name}</div>`).join("")}
+    </div>
+  `;
+}
+
+document.getElementById('loadDataBtn').addEventListener('click', getData);
+document.getElementById('loseDataBtn').addEventListener('click', () => {
+  const container = document.getElementById('data');
+  container.innerHTML = ''; // Очищення контейнера
+});
+
+
+
+/*async function getData() {
+  try {
+  const response = await fetch('http://127.0.0.1:8081/data/data.json'); // Запит на сервер
+  if (!response.ok) throw new Error('Помилка при завантаженні даних');
+  const data = await response.json(); // Перетворення JSON у JavaScript об'єкт
+  renderData(data); // Функція для відображення даних на сторінці
+  } catch (error) {
+  console.error('Помилка під час отримання даних:', error);
+  }
+ }/*
+
+/*async function getData() {
+  try {
+  const response = await fetch('http://127.0.0.1:8080/dist/data.json'); // Запит на сервер
+  if (!response.ok) throw new Error('Помилка при завантаженні даних');
+  const data = await response.json(); // Перетворення JSON у JavaScript об'єкт
+  renderData(data); // Функція для відображення даних на сторінці
+  } catch (error) {
+  console.error('Помилка під час отримання даних:', error);
+  }
+ }*/
+ 
+
+// Функція для асинхронного запиту на сервер для отримання даних
+/*async function getData() {
+  try {
+    const response = await fetch('http://127.0.0.1:8080/data.json'); 
     if (!response.ok) throw new Error('Помилка при завантаженні даних');
     const data = await response.json(); 
     console.log("data", data);
@@ -38,6 +107,7 @@ async function getData() {
     console.error('Помилка під час отримання даних:', error);
   }
 }
+
 
 // Функція для відображення даних на сторінці
 function renderData(data) {
