@@ -22,7 +22,7 @@ gulp.task("html", function () {
         basepath: "@file",
       })
     )
-    .pipe(gulp.dest("dist")) 
+    .pipe(gulp.dest("dist")) // Зберігаємо в dist/html
     .pipe(browserSync.stream());
 });
 
@@ -39,7 +39,7 @@ gulp.task("scss", function () {
     )
     .pipe(cssnano())
     .pipe(rename({ suffix: ".min" }))
-    .pipe(gulp.dest("./dist/css")) 
+    .pipe(gulp.dest("./dist/css")) // Зберігаємо в dist/css
     .pipe(browserSync.stream());
 });
 
@@ -89,13 +89,15 @@ gulp.task("copy-bootstrap", function () {
   return gulp
     .src([
       "node_modules/bootstrap/dist/css/bootstrap.min.css",
+      // "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
     ])
-    .pipe(gulp.dest("dist/css")); 
+    .pipe(gulp.dest("dist/css")); // Зберігаємо CSS в dist/css
 });
 
 // Таск для копіювання data.json
 gulp.task("copy-json", function () {
   return gulp.src("app/data/data.json")
+  //.pipe(rename({ suffix: ".min" }))
   .pipe(gulp.dest("./dist/data"))
   .pipe(browserSync.stream());
 });
